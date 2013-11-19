@@ -28,7 +28,7 @@ FIGaugeSet:FIGaugeSet {
   
 }
 // ----- Private -------------------------------------------------------------
-void sendCommand(char id, char cmd, long value) {
+void FIGaugeSet::sendCommand(char id, char cmd, long value) {
   char buffer[]={0x00,0x00,0x00,0x00,0x00,0x00};
   char bytethree, int2, cnt;
   long long1;

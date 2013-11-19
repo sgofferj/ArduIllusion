@@ -24,12 +24,13 @@
 #ifndef ArduIllusion_h
 #define ArduIllusion_h
 
+#ifndef gaugeSet
 #define gaugeSet Serial3
+#endif
 
 class FIGaugeSet {
   public:
     FIGaugeSet();
-  private:
-    sendCommand(char id, char cmd, long value);
+    void sendCommand(char id, char cmd, long value);
 }
 #endif
