@@ -21,10 +21,11 @@
 // Boston, MA 02110-1301 USA
 //
 
+#include <FastSerial.h>
 #include <ArduIllusion.h>
 
 // ----- Constructor ---------------------------------------------------------
-FIGaugeSet:FIGaugeSet {
+FIGaugeSet::FIGaugeSet() {
   
 }
 // ----- Private -------------------------------------------------------------
@@ -50,8 +51,37 @@ void FIGaugeSet::sendCommand(char id, char cmd, long value) {
   buffer[2]=bytethree & 0xff;
   
   for (cnt=0;cnt<=5;cnt++) {
-    gaugeSet.write(buffer[cnt]);
+    gaugePort.write(buffer[cnt]);
   }
 }
 
 // ----- Public --------------------------------------------------------------
+
+void FIGaugeSet::Init() {
+  sendCommand(103,8,0);
+  delay(100);
+  sendCommand(103,3,64);
+  delay(100);
+  sendCommand(103,3,-64);
+  delay(100);
+  sendCommand(103,1,0);
+  delay(4000);
+  sendCommand(103,8,192);
+  delay(100);
+}
+
+void FIGaugeSet::setLight(char light) {
+  sendCommand(103,8,light);
+}
+
+void FIGaugeSet::setRoll(float angle) {
+  sendCommand(103,4,(360-(angle+rollOffset))*rollSteps);
+}
+
+void FIGaugeSet::setPitch(float angle) {
+  sendCommand(103,5,-1*angle*pitchSteps+pitchOffset);
+}
+  
+
+  
+  

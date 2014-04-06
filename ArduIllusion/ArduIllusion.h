@@ -24,13 +24,30 @@
 #ifndef ArduIllusion_h
 #define ArduIllusion_h
 
-#ifndef gaugeSet
-#define gaugeSet Serial3
+#if ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
 #endif
+
+#ifndef gaugePort
+#define gaugePort Serial3
+#endif
+
+#define rollSteps 10.667
+#define rollOffset 180
+#define pitchSteps 24
+#define pitchOffset 600
+
 
 class FIGaugeSet {
   public:
     FIGaugeSet();
+    void Init();
+    void setLight(char light);
+    void setRoll(float angle);
+    void setPitch(float angle);
+  private:
     void sendCommand(char id, char cmd, long value);
-}
+};
 #endif
